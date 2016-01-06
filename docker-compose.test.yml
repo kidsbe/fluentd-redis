@@ -12,6 +12,6 @@ fluentd:
     - redis
   environment:
     - REDIS_HOST=redis
+    
 redis:
-
   image: redis
