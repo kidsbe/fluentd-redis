@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ -n "$DEBUG_LOOP" ]; then
+  while true; do
+    sleep 1;
+  done;
+fi;
+
 until nc fluentd 24224 <<< "1"; do
   sleep 0.1
 done
