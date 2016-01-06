@@ -7,6 +7,7 @@ module Fluent
       super
       require 'redis'
       require 'json'
+      require 'date'
     end
 
     def configure(conf)
@@ -37,6 +38,9 @@ module Fluent
       @redis.pipelined {
         chain.next
         es.each { |time,record|
+          if not record.has_key?('timestamp')
+             record['timestamp'] = Time.at(time).utc.to_datetime.iso8601
+          end
           @redis.rpush @list, record.to_json
         }
       }
