@@ -1,0 +1,17 @@
+sut:
+  build: .
+  dockerfile: sut.dockerfile
+  links:
+    - fluentd
+    - redis
+  command: /sut.sh
+
+fluentd:
+  build: .
+  links:
+    - redis
+  environment:
+    - REDIS_HOST=redis
+redis:
+
+  image: redis
