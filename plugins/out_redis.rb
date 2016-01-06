@@ -38,8 +38,8 @@ module Fluent
       @redis.pipelined {
         chain.next
         es.each { |time,record|
-          if not record.has_key?('timestamp')
-             record['timestamp'] = Time.at(time).utc.to_datetime.iso8601
+          if not record.has_key?('fluent_timestamp')
+             record['fluent_timestamp'] = Time.at(time).utc.to_datetime.iso8601
           end
           @redis.rpush @list, record.to_json
         }

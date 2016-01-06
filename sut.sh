@@ -14,7 +14,7 @@ done
 # test_existing_timestamp
 #
 
-body='{"a":"b","timestamp":"some"}'
+body='{"a":"b","fluent_timestamp":"some"}'
 echo $body | fluent-cat -h fluentd test.test
 
 len=$(redis-cli -h redis --raw llen fluentd)
@@ -37,6 +37,6 @@ echo $body | fluent-cat -h fluentd test.test
 len=$(redis-cli -h redis --raw llen fluentd)
 res=$(redis-cli -h redis --raw lrange fluentd $(($len-1)) $len)
 
-if [ "$(echo $res | jq .a)" != "\"b\"" -o "$(echo $res | jq .timestamp)" == "null" ]; then
+if [ "$(echo $res | jq .a)" != "\"b\"" -o "$(echo $res | jq .fluent_timestamp)" == "null" ]; then
   echo invalid result: \'$res\'
 fi;
