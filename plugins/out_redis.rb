@@ -39,7 +39,9 @@ module Fluent
         chain.next
         es.each { |time,record|
           if not record.has_key?('fluent_timestamp')
-             record['fluent_timestamp'] = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
+             t = Time.now.utc
+             record['fluent_timestamp'] = t.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
+             record['fluent_nsec_since_epoch'] = ((t.to_i * 1000000000) + t.nsec).to_s
           end
           @redis.rpush @list, record.to_json
         }
