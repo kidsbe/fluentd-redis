@@ -39,4 +39,5 @@ res=$(redis-cli -h redis --raw lrange fluentd $(($len-1)) $len)
 
 if [ "$(echo $res | jq .a)" != "\"b\"" -o "$(echo $res | jq .fluent_timestamp)" == "null" ]; then
   echo invalid result: \'$res\'
+  exit 1
 fi;

@@ -39,7 +39,7 @@ module Fluent
         chain.next
         es.each { |time,record|
           if not record.has_key?('fluent_timestamp')
-             record['fluent_timestamp'] = Time.at(time).utc.to_datetime.iso8601
+             record['fluent_timestamp'] = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
           end
           @redis.rpush @list, record.to_json
         }
