@@ -41,7 +41,7 @@ module Fluent
           if not record.has_key?('fluent_timestamp')
              t = Time.now.utc
              record['fluent_timestamp'] = t.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
-             record['fluent_nsec_since_epoch'] = ((t.to_i * 1000000000) + t.nsec).to_s
+             record['fluent_nsec_since_epoch_utc'] = ((t.to_i * 1000000000) + t.nsec).to_s
           end
           @redis.rpush @list, record.to_json
         }
